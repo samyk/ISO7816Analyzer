@@ -20,14 +20,12 @@ The configuration dialog:
 
 ## Building
 
-First, make sure that you cloned the repository including the submodules:
-
-```
-git clone --recursive https://github.com/nezza/ISO7816Analyzer.git
-```
-
-And then simply run:
-
-```
-python3 build_analyzer.py
+```sh
+git clone https://github.com/nezza/ISO7816Analyzer
+cd ISO7816Analyzer
+mkdir build
+cd build
+cmake ..
+make
+sudo make install
 ```
