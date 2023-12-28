@@ -9,6 +9,7 @@ ISO7816Analyzer::ISO7816Analyzer()
 	mSimulationInitilized( false )
 {
 	SetAnalyzerSettings( mSettings.get() );
+	UseFrameV2();
 }
 
 ISO7816Analyzer::~ISO7816Analyzer()
@@ -90,7 +91,7 @@ void ISO7816Analyzer::WorkerThread()
 
 
 
-		//we have a byte to save. 
+		//we have a byte to save.
 		Frame frame;
 		frame.mData1 = data;
 		frame.mFlags = 0;
@@ -98,6 +99,10 @@ void ISO7816Analyzer::WorkerThread()
 		frame.mEndingSampleInclusive = mSerial->GetSampleNumber();
 
 		mResults->AddFrame( frame );
+
+		FrameV2 frame_v2;
+		frame_v2.AddByte( "dat", data );
+		mResults->AddFrameV2( frame_v2, "byte", frame.mStartingSampleInclusive, frame.mEndingSampleInclusive );
 		mResults->CommitResults();
 		ReportProgress( frame.mEndingSampleInclusive );
 	}
